@@ -13,6 +13,18 @@ public class Projectile : MonoBehaviour
     // Start is called before the first frame update
     void Start() {
         Destroy(gameObject, 3f);
+        Collider [] initialCollisions = Physics.OverlapSphere(transform.position, 0.1f, enemyCollisionMask);
+        if (initialCollisions.Length > 0) {
+            IDamageable damageableObject = initialCollisions[0].GetComponent<IDamageable>();
+            if (damageableObject != null) {
+                damageableObject.TakeDamage(damage);
+            }
+            Destroy(gameObject);
+        }
+        initialCollisions = Physics.OverlapBox(transform.position, Vector3.one * 0.5f, Quaternion.identity, obstacleCollisionMask);
+        if (initialCollisions.Length > 0) {
+            Destroy(gameObject);
+        }
     }
 
     void Update() {

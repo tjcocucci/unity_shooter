@@ -8,6 +8,7 @@ public class Spawner : MonoBehaviour
     public Enemy enemy;
     public Wave[] waves;
 
+    Player player;
     Wave currentWave;
     int currentWaveNumber;
     float timeForNextSpawn;
@@ -19,6 +20,7 @@ public class Spawner : MonoBehaviour
     MapGenerator map;
 
     void Start() {
+        player = FindObjectOfType<Player>();
         map = FindObjectOfType<MapGenerator>();
         NextWave();
     }
@@ -44,10 +46,12 @@ public class Spawner : MonoBehaviour
     IEnumerator SpawnEnemy() {
 
         Transform tileTransform;
-        // if (!camping){
+        if (!player.camping){
             tileTransform = map.GetRandomTile(map.shuffledEmptyTiles);
-        // } else {
-        // }
+        } else {
+            print("Camping Spawn");
+            tileTransform = map.TileFromPosition(player.transform.position);
+        }
         Material tileMaterial = tileTransform.GetComponent<Renderer> ().material;
         Color originalColor = tileMaterial.color;
 
@@ -58,6 +62,7 @@ public class Spawner : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        tileMaterial.color = originalColor;
 
         Enemy spawnedEnemy = Instantiate(enemy, tileTransform.position, Quaternion.identity);
         spawnedEnemy.ObjectDied += OnEnemyDeath;
@@ -65,7 +70,6 @@ public class Spawner : MonoBehaviour
     }
 
     void OnEnemyDeath() {
-        print("Enemy died");
         killedEnemies++;
         if (killedEnemies == currentWave.totalEnemies && currentWaveNumber < waves.Length) {
             NextWave();

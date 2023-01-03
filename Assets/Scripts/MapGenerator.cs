@@ -178,6 +178,16 @@ public class MapGenerator : MonoBehaviour
         return tileMap[coord.x, coord.y];
     }
 
+    public Transform TileFromPosition (Vector3 position) {
+        int x = Mathf.FloorToInt((position.x + currentMap.mapSizeX/2f) / currentMap.tileSize);
+        int y = Mathf.FloorToInt((position.z + currentMap.mapSizeY/2f) / currentMap.tileSize);
+        if (0 <= x && x < currentMap.sizeX && 0 <= y && y < currentMap.sizeY) {
+            return tileMap[x, y];
+        } else {
+            return null;
+        }
+    }
+
     [System.Serializable]
     public struct Coord {
         public int x;

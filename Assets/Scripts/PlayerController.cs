@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     Vector3 lookPoint;
     // float smoothMagnitude;
     // float smoothMoveVelocity;
-    // public float smoothMoveTime = 0.1f;
+    // float smoothMoveTime = 0.1f;
 
     void Start()
     {
@@ -20,7 +20,9 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         // smoothMagnitude = Mathf.SmoothDamp(smoothMagnitude, velocity.magnitude, ref smoothMoveVelocity, smoothMoveTime);
-        myRigidbody.MovePosition(myRigidbody.position + velocity * Time.fixedDeltaTime);
+        if (velocity.magnitude > 1e-5f) {
+            myRigidbody.MovePosition(myRigidbody.position + velocity * Time.fixedDeltaTime);
+        }
         transform.LookAt(lookPoint);
     }
 

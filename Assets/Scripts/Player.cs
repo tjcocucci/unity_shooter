@@ -11,12 +11,34 @@ public class Player : DamageableObject
     Camera viewCamera;
     public float moveSpeed = 7f;
 
+    public bool camping;
+    float campingCheckTime = 3;
+    Vector3 previousPosition;
+    float campingDistance = 1f;
+
     protected override void Start()
     {
         base.Start();
         viewCamera = Camera.main;
         controller = GetComponent<PlayerController>();
         gunController = GetComponent<GunController>();
+
+        camping = false;
+        previousPosition = transform.position + Vector3.one * campingDistance * 2 ;
+        StartCoroutine(CheckIfCamping());
+    }
+
+    IEnumerator CheckIfCamping () {
+        while (true && !dead) {
+            float distance = Vector3.Distance(previousPosition, transform.position);
+            previousPosition = transform.position;
+            if (distance < campingDistance) {
+                camping = true;
+            } else {
+                camping = false;
+            }
+            yield return new WaitForSeconds(campingCheckTime);
+        }
     }
 
     void Update()
@@ -25,6 +47,8 @@ public class Player : DamageableObject
         Vector3 moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         Vector3 velocity = moveInput.normalized * moveSpeed;
         controller.Move(velocity);
+
+        MapGenerator map = FindObjectOfType<MapGenerator>();
 
         // Aim input
         Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
