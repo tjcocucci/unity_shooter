@@ -17,10 +17,20 @@ public class Spawner : MonoBehaviour
     float flashingTime = 2f;
     float flashingSpeed = 5f;
 
+    bool playerCamping;
+    float nextCampingTime;
+    Vector3 previousPosition;
+    float campingCheckTime = 2;
+    float campingDistance = 1.5f;
+
     MapGenerator map;
 
     void Start() {
         player = FindObjectOfType<Player>();
+        nextCampingTime = campingCheckTime;
+        playerCamping = false;
+        previousPosition = player.transform.position + Vector3.one * campingDistance * 2 ;
+
         map = FindObjectOfType<MapGenerator>();
         NextWave();
     }
@@ -41,12 +51,29 @@ public class Spawner : MonoBehaviour
             timeForNextSpawn = Time.time + currentWave.timeBetweenSpawns;
             StartCoroutine(SpawnEnemy());
         }
+
+        if (Time.time > nextCampingTime) {
+            nextCampingTime += campingCheckTime;
+            CheckIfCamping();
+        }
+
     }
+
+    void CheckIfCamping () {
+        float distance = Vector3.Distance(previousPosition, transform.position);
+        previousPosition = transform.position;
+        if (distance < campingDistance) {
+            playerCamping = true;
+        } else {
+            playerCamping = false;
+        }
+    }
+
 
     IEnumerator SpawnEnemy() {
 
         Transform tileTransform;
-        if (!player.camping){
+        if (!playerCamping){
             tileTransform = map.GetRandomTile(map.shuffledEmptyTiles);
         } else {
             print("Camping Spawn");
