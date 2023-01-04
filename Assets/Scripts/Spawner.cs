@@ -25,9 +25,14 @@ public class Spawner : MonoBehaviour
 
     MapGenerator map;
 
+    bool isDisabled;
+
+    public event System.Action<int> OnNextWaveStart;
+
     void Start() {
         player = FindObjectOfType<Player>();
-        nextCampingTime = campingCheckTime;
+        player.ObjectDied += OnPlayerDeath;
+        nextCampingTime = Time.time + campingCheckTime;
         playerCamping = false;
         previousPosition = player.transform.position + Vector3.one * campingDistance * 2 ;
 
@@ -36,27 +41,36 @@ public class Spawner : MonoBehaviour
     }
 
     void NextWave() {
-        timeForNextSpawn = Time.time;
-        spawnedEnemies = 0;
-        killedEnemies = 0;
-
         currentWaveNumber++;
-        currentWave = waves[currentWaveNumber - 1];
-        print("Starting wave: " + currentWaveNumber);
+        if (currentWaveNumber <= waves.Length) {
+            timeForNextSpawn = Time.time;
+            spawnedEnemies = 0;
+            killedEnemies = 0;
+            playerCamping = false;
+            nextCampingTime = Time.time + campingCheckTime;
+
+            currentWave = waves[currentWaveNumber - 1];
+            print("Starting wave: " + currentWaveNumber);
+
+            if (OnNextWaveStart != null) {
+                OnNextWaveStart(currentWaveNumber - 1);
+            }
+        }
     }
 
     void Update() {
-        if (Time.time > timeForNextSpawn && spawnedEnemies < currentWave.totalEnemies) {
-            spawnedEnemies++;
-            timeForNextSpawn = Time.time + currentWave.timeBetweenSpawns;
-            StartCoroutine(SpawnEnemy());
-        }
+        if (!isDisabled) {
+            if (Time.time > timeForNextSpawn && spawnedEnemies < currentWave.totalEnemies) {
+                spawnedEnemies++;
+                timeForNextSpawn = Time.time + currentWave.timeBetweenSpawns;
+                StartCoroutine(SpawnEnemy());
+            }
 
-        if (Time.time > nextCampingTime) {
-            nextCampingTime += campingCheckTime;
-            CheckIfCamping();
+            if (Time.time > nextCampingTime) {
+                nextCampingTime += campingCheckTime;
+                CheckIfCamping();
+            }
         }
-
     }
 
     void CheckIfCamping () {
@@ -76,7 +90,6 @@ public class Spawner : MonoBehaviour
         if (!playerCamping){
             tileTransform = map.GetRandomTile(map.shuffledEmptyTiles);
         } else {
-            print("Camping Spawn");
             tileTransform = map.TileFromPosition(player.transform.position);
         }
         Material tileMaterial = tileTransform.GetComponent<Renderer> ().material;
@@ -101,6 +114,10 @@ public class Spawner : MonoBehaviour
         if (killedEnemies == currentWave.totalEnemies && currentWaveNumber < waves.Length) {
             NextWave();
         }
+    }
+
+    void OnPlayerDeath() {
+        isDisabled = true;
     }
 
     [System.Serializable]

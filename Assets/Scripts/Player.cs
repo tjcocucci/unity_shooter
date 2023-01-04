@@ -15,10 +15,14 @@ public class Player : DamageableObject
     {
         base.Start();
         viewCamera = Camera.main;
+        FindObjectOfType<Spawner>().OnNextWaveStart += ResetPosition;
         controller = GetComponent<PlayerController>();
         gunController = GetComponent<GunController>();
     }
 
+    void ResetPosition(int i) {
+        transform.position = Vector3.zero + Vector3.up;
+    }
 
     void Update()
     {

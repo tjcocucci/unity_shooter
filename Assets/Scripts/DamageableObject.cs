@@ -26,6 +26,7 @@ public class DamageableObject : MonoBehaviour, IDamageable
         }
     }
 
+    [ContextMenu("Self Destruct")]
     protected virtual void Die() {
         dead = true;
         GameObject.Destroy(gameObject);

@@ -6,7 +6,7 @@ public class MapGenerator : MonoBehaviour
 {
     public Map[] maps;
 
-    public int mapIndex;
+    public int mapIndex = 0;
     
     public Transform tilePrefab;
     public Transform obstaclePrefab;
@@ -19,6 +19,7 @@ public class MapGenerator : MonoBehaviour
 
     void Start() {
         GenerateMap();
+        FindObjectOfType<Spawner>().OnNextWaveStart += GenerateNewLevel;
     }
 
     public void GenerateMap() {
@@ -197,6 +198,11 @@ public class MapGenerator : MonoBehaviour
             x = _x;
             y = _y;
         }
+    }
+
+    public void GenerateNewLevel(int i) {
+        mapIndex = i;
+        GenerateMap();
     }
 
     [System.Serializable]
