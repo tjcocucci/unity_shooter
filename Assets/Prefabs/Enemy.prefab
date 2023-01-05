@@ -134,9 +134,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 5
   health: 0
+  dead: 0
+  DeathEffectPrefab: {fileID: 8897746789425457756, guid: 8dd936306a6a8324a85fc0a2e72d6206, type: 3}
   attackDistance: 2
   attackDuration: 0.1
   followDelay: 0.25
   timeBetweenAttacks: 2
+  damage: 1
   originalColor: {r: 0.11801354, g: 0.6415094, b: 0.3614679, a: 0}
   attackColor: {r: 1, g: 0, b: 0, a: 0}

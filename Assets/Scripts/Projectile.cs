@@ -17,7 +17,7 @@ public class Projectile : MonoBehaviour
         if (initialCollisions.Length > 0) {
             IDamageable damageableObject = initialCollisions[0].GetComponent<IDamageable>();
             if (damageableObject != null) {
-                damageableObject.TakeDamage(damage);
+                damageableObject.TakeHit(damage, transform.position, transform.forward);
             }
             Destroy(gameObject);
         }
@@ -44,7 +44,7 @@ public class Projectile : MonoBehaviour
         if (Physics.Raycast(ray, out hit, distance + offset, enemyCollisionMask, QueryTriggerInteraction.Collide)) {
             IDamageable damageableObject = hit.collider.GetComponent<IDamageable>();
             if (damageableObject != null) {
-                damageableObject.TakeDamage(damage, hit);
+                damageableObject.TakeHit(damage, hit.point, transform.forward);
             }
             Destroy(gameObject);
         }

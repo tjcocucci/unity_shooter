@@ -8,6 +8,8 @@ public class Enemy : DamageableObject
 {
     public enum State {Idle, Chasing, Attacking};
 
+    public ParticleSystem DeathEffectPrefab;
+
     NavMeshAgent pathfinder;
     Transform targetTransform;
     State currentState;
@@ -101,6 +103,19 @@ public class Enemy : DamageableObject
     void OnTargetDeath() {
         hasTarget = false;
         currentState = State.Idle;
+    }
+
+    public override void TakeHit(float damage, Vector3 hitPoint, Vector3 hitDirection) {
+        if (damage >= health) {
+            Destroy(
+                Instantiate(
+                    DeathEffectPrefab.gameObject,
+                    hitPoint,
+                    Quaternion.FromToRotation(Vector3.forward, hitDirection)
+                ),
+            DeathEffectPrefab.main.duration + DeathEffectPrefab.main.startLifetime.constantMax);
+        }
+        base.TakeHit(damage, hitPoint, hitDirection);
     }
 
     IEnumerator FindPath() {
