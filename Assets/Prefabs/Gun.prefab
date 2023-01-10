@@ -328,6 +328,13 @@ MonoBehaviour:
   burstSize: 3
   msToShoot: 100
   projectileSpeed: 35
+  recoilDistanceMinmax: {x: 0.1, y: 0.5}
+  recoilAngleMinmax: {x: 2, y: 5}
+  recoilMaxAngle: 30
+  recoilDuration: 0.15
+  reloadTime: 0.5
+  maxReloadAngle: 50
+  maxMagazineSize: 10
 --- !u!114 &8187711732296110494
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -40,9 +40,12 @@ public class GunController : MonoBehaviour
         return equippedGun.transform.position.y;
     }
 
+    public void Reload () {
+        equippedGun.Reload();
+    }
+
     public Transform GetMuzzlePosition () {
         return equippedGun.muzzlePosition.transform;
-
     }
 
 }

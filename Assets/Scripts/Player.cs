@@ -59,5 +59,9 @@ public class Player : DamageableObject
             gunController.OnTriggerRelease();
         }
 
+        if (Input.GetKeyDown(KeyCode.R)) {
+            gunController.Reload();
+        }
+
     }
 }
