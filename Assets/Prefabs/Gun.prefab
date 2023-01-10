@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 8187711732296110494}
   m_Layer: 8
   m_Name: Gun
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -320,10 +320,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f2f34f2f8415ae45ad597b4ccd786ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponType: 0
   shellPrefab: {fileID: -3612978508240871425, guid: 117bbab1b8eaf7a44a1a961d6c003172, type: 3}
   muzzlePosition: {fileID: 5779178689352380351}
   projectile: {fileID: 8975677805228037104, guid: ee8361a5f53f38c43937fb6d66ec8281, type: 3}
   shellSpawner: {fileID: 2183484903049824411}
+  burstSize: 3
   msToShoot: 100
   projectileSpeed: 35
 --- !u!114 &8187711732296110494

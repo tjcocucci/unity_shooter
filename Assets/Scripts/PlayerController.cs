@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     Vector3 velocity;
     float rotationSpeed = 10;
     Vector3 lookPoint;
+    Transform gunTransform;
     // float smoothMagnitude;
     // float smoothMoveVelocity;
     // float smoothMoveTime = 0.1f;
@@ -16,13 +17,14 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody>();
+        gunTransform = GetComponentInParent<GunController>().weaponHold;
     }
 
     void FixedUpdate()
     {
         // smoothMagnitude = Mathf.SmoothDamp(smoothMagnitude, velocity.magnitude, ref smoothMoveVelocity, smoothMoveTime);
         myRigidbody.MovePosition(myRigidbody.position + velocity * Time.fixedDeltaTime);
-        myRigidbody.MoveRotation(Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (lookPoint - transform.position), rotationSpeed * Time.deltaTime));
+        myRigidbody.MoveRotation(Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (lookPoint - gunTransform.position), rotationSpeed * Time.deltaTime));
         // myRigidbody.MoveRotation(Quaternion.Slerp() FromToRotation(transform.forward, lookPoint));
     }
 

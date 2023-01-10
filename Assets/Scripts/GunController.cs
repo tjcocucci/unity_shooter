@@ -36,4 +36,13 @@ public class GunController : MonoBehaviour
         }
     }
 
+    public float GetGunHeight () {
+        return equippedGun.transform.position.y;
+    }
+
+    public Transform GetMuzzlePosition () {
+        return equippedGun.muzzlePosition.transform;
+
+    }
+
 }

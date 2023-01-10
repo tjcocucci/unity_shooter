@@ -10,6 +10,8 @@ public class Player : DamageableObject
     GunController gunController;
     Camera viewCamera;
     public float moveSpeed = 7f;
+    public Crosshairs crosshairsPrefab;
+    Crosshairs crosshairs;
 
     protected override void Start()
     {
@@ -18,6 +20,7 @@ public class Player : DamageableObject
         FindObjectOfType<Spawner>().OnNextWaveStart += ResetPosition;
         controller = GetComponent<PlayerController>();
         gunController = GetComponent<GunController>();
+        crosshairs = Instantiate(crosshairsPrefab, transform.position, crosshairsPrefab.transform.rotation);
     }
 
     void ResetPosition(int i) {
@@ -35,13 +38,16 @@ public class Player : DamageableObject
 
         // Aim input
         Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
-        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+        Plane groundPlane = new Plane(Vector3.up, new Vector3(0, gunController.GetGunHeight(), 0));
         float rayDistance;
+
 
         if (groundPlane.Raycast(ray, out rayDistance)) {
             Vector3 intersectionPoint = ray.GetPoint(rayDistance);
             // Debug.DrawLine(ray.origin, lookPoint);
             controller.LookAt(intersectionPoint);
+            crosshairs.transform.position = intersectionPoint;
+            crosshairs.DetectTargets(ray);
         }
 
         // Weapon input
