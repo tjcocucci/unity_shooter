@@ -13,7 +13,7 @@ public class Crosshairs : MonoBehaviour
 
 
     void Start() {
-        print(dot.color);
+        Cursor.visible = false;
         originalColor = dot.color;
     }
     void Update() {
