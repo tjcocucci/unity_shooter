@@ -55,8 +55,6 @@ public class Enemy : DamageableObject
             targetDamageable.ObjectDied += OnTargetDeath;
         }
 
-
-
         StartCoroutine(FindPath());
     }
 
@@ -73,8 +71,8 @@ public class Enemy : DamageableObject
         }
     }
 
-    public void SetCharacteristics (Color skinColor, float enemySpeed, int hitsToKillPlayer, float _health) {
-        health = _health;
+    public void SetCharacteristics (Color skinColor, float enemySpeed, int hitsToKillPlayer, float health) {
+        startingHealth = health;
         pathfinder.speed = enemySpeed;
         if (targetDamageable != null) {
             damage = targetDamageable.startingHealth / hitsToKillPlayer;

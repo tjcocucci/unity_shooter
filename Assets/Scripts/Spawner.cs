@@ -115,7 +115,7 @@ public class Spawner : MonoBehaviour
         }
         tileMaterial.color = originalColor;
 
-        Enemy spawnedEnemy = Instantiate(enemy, tileTransform.position, Quaternion.identity);
+        Enemy spawnedEnemy = Instantiate(enemy, tileTransform.position, Quaternion.identity) as Enemy;
         spawnedEnemy.ObjectDied += OnEnemyDeath;
         spawnedEnemy.SetCharacteristics(currentWave.skinColor, currentWave.enemySpeed, currentWave.hitsToKillPlayer, currentWave.health);
 
