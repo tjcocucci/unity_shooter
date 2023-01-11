@@ -7,20 +7,21 @@ public class GunController : MonoBehaviour
 {
 
     public Transform weaponHold;
-    public Gun startingGun;
     public Gun equippedGun;
+    public Gun[] allGuns;
 
     void Start() {
-        if (startingGun != null) {
-            EquipGun(startingGun);
-        }
     }
 
-    void EquipGun(Gun gun) {
+    public void EquipGun(int waveIndex) {
+        EquipGun(allGuns[waveIndex]);
+    }
+
+    public void EquipGun(Gun gun) {
         if (equippedGun != null) {
             Destroy(equippedGun);
         }
-        equippedGun = Instantiate(startingGun, weaponHold.position, weaponHold.rotation) as Gun;
+        equippedGun = Instantiate(gun, weaponHold.position, weaponHold.rotation) as Gun;
         equippedGun.transform.parent = weaponHold;
     }
 
@@ -42,10 +43,6 @@ public class GunController : MonoBehaviour
 
     public void Reload () {
         equippedGun.Reload();
-    }
-
-    public Transform GetMuzzlePosition () {
-        return equippedGun.muzzlePosition.transform;
     }
 
 }

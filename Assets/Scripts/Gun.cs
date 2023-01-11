@@ -8,7 +8,8 @@ public class Gun : MonoBehaviour
     public WeaponType weaponType;
 
     public Shell shellPrefab;
-    public Transform muzzlePosition;
+    public Transform muzzle;
+    Transform[] muzzlePositions;
     public Projectile projectile;
     public Transform shellSpawner;
 
@@ -43,6 +44,7 @@ public class Gun : MonoBehaviour
         shotsRemainingInBurst = burstSize;
         bulletsRemainingInMagazine = maxMagazineSize;
         muzzleFlash = GetComponent<MuzzleFlash>();
+        muzzlePositions = muzzle.GetComponentsInChildren<Transform>();
     }
 
     void LateUpdate() {
@@ -66,12 +68,14 @@ public class Gun : MonoBehaviour
                 shotsRemainingInBurst--;
             }
 
-            bulletsRemainingInMagazine--;
+            for (int i=0; i<muzzlePositions.Length; i++) {
+                bulletsRemainingInMagazine--;
+                Projectile newProjectile = Instantiate(projectile, muzzlePositions[i].position, muzzlePositions[i].rotation) as Projectile;
+                newProjectile.SetSpeed(projectileSpeed);
+                Shell newShell = Instantiate(shellPrefab, shellSpawner.position, shellSpawner.rotation) as Shell;
+            }
             nextShotTime = Time.time + msToShoot / 1000;
-            Projectile newProjectile = Instantiate(projectile, muzzlePosition.position, muzzlePosition.rotation) as Projectile;
-            newProjectile.SetSpeed(projectileSpeed);
 
-            Shell newShell = Instantiate(shellPrefab, shellSpawner.position, shellSpawner.rotation) as Shell;
             muzzleFlash.Activate();
 
             transform.localPosition = transform.localPosition + Vector3.back * Random.Range(recoilDistanceMinmax.x, recoilDistanceMinmax.y);

@@ -9,8 +9,14 @@ public class UIScreen : MonoBehaviour
     public Image background;
     public GameObject UIElements;
     public Button playAgainButton;
+    public Spawner spawner;
+    public Transform nextWaveBanner;
+    public Text bannerWaveText;
+    public Text bannerEnemiesText;
+
     float fadeTime = 1f;
     float opacity = 0.8f;
+    float bannerAnimationTime = 2;
 
     IEnumerator Fade () {
         Color originalColor = background.color;
@@ -26,6 +32,28 @@ public class UIScreen : MonoBehaviour
         }
     }
 
+    void ShowBanner(int waveIndex) {
+        bannerWaveText.text = "- Wave Number" + (waveIndex + 1) + " -";
+        bannerEnemiesText.text = "Enemies: " + spawner.currentWave.totalEnemies;
+        StopCoroutine("BannerAnimation");
+        StartCoroutine("BannerAnimation");
+    }
+
+    IEnumerator BannerAnimation () {
+        float percent = 0;
+        float speed = 1 / bannerAnimationTime;
+        float dir = 1;
+        while (percent >= 0) {
+            percent += Time.deltaTime * speed * dir;
+            nextWaveBanner.transform.localPosition = Vector3.up * Mathf.Lerp(-500, -240, percent);
+            if(percent >= 1) {
+                dir = -1;
+                yield return new WaitForSeconds(2);
+            }
+            yield return null;
+        }
+    }
+
     void OnGameOver () {
         StartCoroutine(Fade());
         UIElements.SetActive(true);
@@ -35,6 +63,7 @@ public class UIScreen : MonoBehaviour
     void Start()
     {
         FindObjectOfType<Player>().ObjectDied += OnGameOver;
+        FindObjectOfType<Spawner>().OnNextWaveStart += ShowBanner;
         UIElements.SetActive(false);
     }
 

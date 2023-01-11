@@ -12,19 +12,31 @@ public class Player : DamageableObject
     public float moveSpeed = 7f;
     public Crosshairs crosshairsPrefab;
     Crosshairs crosshairs;
+    Spawner spawner;
+
+    void Awake()
+    {
+        spawner = FindObjectOfType<Spawner>();
+        controller = GetComponent<PlayerController>();
+        gunController = GetComponent<GunController>();
+    }
 
     protected override void Start()
     {
         base.Start();
         viewCamera = Camera.main;
-        FindObjectOfType<Spawner>().OnNextWaveStart += ResetPosition;
-        controller = GetComponent<PlayerController>();
-        gunController = GetComponent<GunController>();
+        spawner.OnNextWaveStart += RestartPlayer;
+        spawner.OnNextWaveStart += EquipGun;
         crosshairs = Instantiate(crosshairsPrefab, transform.position, crosshairsPrefab.transform.rotation);
     }
 
-    void ResetPosition(int i) {
+    void RestartPlayer(int i) {
         transform.position = Vector3.zero + Vector3.up;
+        health = startingHealth;
+    }
+
+    void EquipGun(int i) {
+        gunController.EquipGun(i);
     }
 
     void Update()

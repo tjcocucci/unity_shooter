@@ -10,8 +10,8 @@ public class Spawner : MonoBehaviour
     public Wave[] waves;
 
     Player player;
-    Wave currentWave;
-    int currentWaveNumber;
+    public Wave currentWave;
+    public int currentWaveNumber;
     float timeForNextSpawn;
     int spawnedEnemies;
     int killedEnemies;
@@ -21,8 +21,8 @@ public class Spawner : MonoBehaviour
     bool playerCamping;
     float nextCampingTime;
     Vector3 previousPosition;
-    float campingCheckTime = 2;
-    float campingDistance = 1.5f;
+    float campingCheckTime = 5;
+    float campingDistance = 1;
 
     MapGenerator map;
 
@@ -39,6 +39,10 @@ public class Spawner : MonoBehaviour
 
         map = FindObjectOfType<MapGenerator>();
         NextWave();
+        if (devMode) {
+            player.startingHealth = 100000;
+            player.health = 100000;
+        }
     }
 
     void NextWave() {
@@ -74,7 +78,7 @@ public class Spawner : MonoBehaviour
         }
 
         if (devMode) {
-            if (Input.GetKey(KeyCode.Return)) {
+            if (Input.GetKeyDown(KeyCode.Return)) {
                 StopCoroutine("SpawnEnemy");
                 foreach (Enemy enemy in FindObjectsOfType<Enemy>()) {
                     GameObject.Destroy(enemy.gameObject);
@@ -102,6 +106,7 @@ public class Spawner : MonoBehaviour
             tileTransform = map.GetRandomTile(map.shuffledEmptyTiles);
         } else {
             tileTransform = map.TileFromPosition(player.transform.position);
+            playerCamping = false;
         }
         Material tileMaterial = tileTransform.GetComponent<Renderer> ().material;
         Color originalColor = tileMaterial.color;
