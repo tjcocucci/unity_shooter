@@ -5,6 +5,7 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
 
+    public bool devMode;
     public Enemy enemy;
     public Wave[] waves;
 
@@ -63,12 +64,22 @@ public class Spawner : MonoBehaviour
             if (Time.time > timeForNextSpawn && spawnedEnemies < currentWave.totalEnemies) {
                 spawnedEnemies++;
                 timeForNextSpawn = Time.time + currentWave.timeBetweenSpawns;
-                StartCoroutine(SpawnEnemy());
+                StartCoroutine("SpawnEnemy");
             }
 
             if (Time.time > nextCampingTime) {
                 nextCampingTime += campingCheckTime;
                 CheckIfCamping();
+            }
+        }
+
+        if (devMode) {
+            if (Input.GetKey(KeyCode.Return)) {
+                StopCoroutine("SpawnEnemy");
+                foreach (Enemy enemy in FindObjectsOfType<Enemy>()) {
+                    GameObject.Destroy(enemy.gameObject);
+                }
+                NextWave();
             }
         }
     }
@@ -106,6 +117,7 @@ public class Spawner : MonoBehaviour
 
         Enemy spawnedEnemy = Instantiate(enemy, tileTransform.position, Quaternion.identity);
         spawnedEnemy.ObjectDied += OnEnemyDeath;
+        spawnedEnemy.SetCharacteristics(currentWave.skinColor, currentWave.enemySpeed, currentWave.hitsToKillPlayer, currentWave.health);
 
     }
 
@@ -124,6 +136,10 @@ public class Spawner : MonoBehaviour
     public class Wave {
         public int totalEnemies;
         public float timeBetweenSpawns;
+        public Color skinColor;
+        public float enemySpeed;
+        public int hitsToKillPlayer;
+        public float health;
     }
 
 }

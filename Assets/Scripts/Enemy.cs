@@ -29,23 +29,33 @@ public class Enemy : DamageableObject
     float targetCollisionRadius;
     bool hasTarget;
 
-    protected override void Start()
+    void Awake()
     {
-        base.Start();
-        currentState = State.Chasing;
         pathfinder = GetComponent<NavMeshAgent>();
         GetComponent<Renderer>().material.color = originalColor;
-        myCollisionRadius = GetComponent<CapsuleCollider>().radius;
-        nextAttackTime = Time.time;
 
         target = GameObject.FindGameObjectWithTag("Player"); 
         if (target != null) {
             hasTarget = true;
             targetTransform = target.transform;
             targetDamageable = target.GetComponent<DamageableObject>();
-            targetDamageable.ObjectDied += OnTargetDeath;
             targetCollisionRadius = target.GetComponent<CapsuleCollider>().radius;
         }
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        currentState = State.Idle;
+
+        myCollisionRadius = GetComponent<CapsuleCollider>().radius;
+        nextAttackTime = Time.time;
+        if (hasTarget) {
+            currentState = State.Chasing;
+            targetDamageable.ObjectDied += OnTargetDeath;
+        }
+
+
 
         StartCoroutine(FindPath());
     }
@@ -61,6 +71,15 @@ public class Enemy : DamageableObject
                 }
             }
         }
+    }
+
+    public void SetCharacteristics (Color skinColor, float enemySpeed, int hitsToKillPlayer, float _health) {
+        health = _health;
+        pathfinder.speed = enemySpeed;
+        if (targetDamageable != null) {
+            damage = targetDamageable.startingHealth / hitsToKillPlayer;
+        }
+        GetComponent<Renderer>().material.color = skinColor;
     }
 
     IEnumerator Attack() {
