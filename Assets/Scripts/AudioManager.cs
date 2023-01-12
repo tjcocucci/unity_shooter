@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -9,10 +10,9 @@ public class AudioManager : MonoBehaviour
     AudioSource[] musicSources;
     AudioSource sfx2DSource;
 
-    [Header("Volume")]
-    public float masterVolume = 1;
-    public float musicVolume = 1;
-    public float sfxVolume = 1;
+    public float masterVolume {get; private set;}
+    public float musicVolume {get; private set;}
+    public float sfxVolume {get; private set;}
     
     public static AudioManager instance;
 
@@ -26,7 +26,7 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
         } else {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+                DontDestroyOnLoad(gameObject);
 
             musicSources = new AudioSource[numberOfMusicSources];
             for (int i = 0; i < numberOfMusicSources; i++) {
@@ -40,13 +40,22 @@ public class AudioManager : MonoBehaviour
             newsfx2DSource.transform.parent = transform;
 
             library = FindObjectOfType<AudioLibrary>();
-            playerTransform = FindObjectOfType<Player> ().transform;
+
             audioListenerTrasnform = FindObjectOfType<AudioListener> ().transform;
 
-            masterVolume = PlayerPrefs.GetFloat("Master volume", masterVolume);
-            musicVolume = PlayerPrefs.GetFloat("Music volume", musicVolume);
-            sfxVolume = PlayerPrefs.GetFloat("sfx volume", sfxVolume);
+            masterVolume = PlayerPrefs.GetFloat("Master volume", 1);
+            musicVolume = PlayerPrefs.GetFloat("Music volume", 1);
+            sfxVolume = PlayerPrefs.GetFloat("sfx volume", 1);
 
+            SceneManager.sceneLoaded += FindPlayer;
+        }
+    }
+
+    void FindPlayer (Scene scene, LoadSceneMode mode) {
+        if (scene.name == "Game") {
+            if (FindObjectOfType<Player> () != null) {
+                playerTransform = FindObjectOfType<Player> ().transform;
+            }
         }
     }
 
@@ -91,7 +100,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    void SetVolume (float volume, AudioChannel channel) {
+    public void SetVolume (float volume, AudioChannel channel) {
         switch (channel) {
             case AudioChannel.Master:
                 masterVolume = volume;
@@ -109,6 +118,7 @@ public class AudioManager : MonoBehaviour
             PlayerPrefs.SetFloat("Master volume", masterVolume);
             PlayerPrefs.SetFloat("Music volume", musicVolume);
             PlayerPrefs.SetFloat("sfx volume", sfxVolume);
+            PlayerPrefs.Save();
     }
 
 

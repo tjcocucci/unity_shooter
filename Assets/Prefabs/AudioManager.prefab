@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8547889893213139822
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8547889893213139821}
+  - component: {fileID: 8547889893213139820}
+  m_Layer: 0
+  m_Name: AudioListener
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8547889893213139821
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8547889893213139822}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.5831293, y: -0.12061894, z: -1.2192682}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8547889894163850474}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &8547889893213139820
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8547889893213139822}
+  m_Enabled: 1
+--- !u!1 &8547889894163850484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8547889894163850474}
+  - component: {fileID: 8547889894163850475}
+  - component: {fileID: 8547889894163850472}
+  - component: {fileID: 8547889894163850473}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8547889894163850474
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8547889894163850484}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8547889893213139821}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8547889894163850475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8547889894163850484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e64a8c64bfd55694aa8c874864b0ccd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberOfMusicSources: 2
+--- !u!114 &8547889894163850472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8547889894163850484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 893a148613a3c1342824e40a7511c14d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicTheme: {fileID: 8300000, guid: a03a24eee7abe7440943431d92734430, type: 3}
+  menuTheme: {fileID: 8300000, guid: ec17bcbc18d0c554ea284af37fd6db04, type: 3}
+--- !u!114 &8547889894163850473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8547889894163850484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e5a4396a8128d84798eef0df6980c4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundGroups:
+  - groupName: Enemy Attack
+    clips:
+    - {fileID: 8300000, guid: bae1351bc99408d46b20d74832a01e27, type: 3}
+  - groupName: Enemy Death
+    clips:
+    - {fileID: 8300000, guid: 4eca5c38e58360243837bc6da04a1744, type: 3}
+    - {fileID: 8300000, guid: 6b4cf61851df24f4783c5eb5e354b9ea, type: 3}
+  - groupName: Player Death
+    clips:
+    - {fileID: 8300000, guid: 2daa96ea541fcd34b84ee1bb77be86c0, type: 3}
+  - groupName: New Wave
+    clips:
+    - {fileID: 8300000, guid: 337c01e1fce4ca44fb48d822c7fa8992, type: 3}
+  - groupName: Bullet Impact
+    clips:
+    - {fileID: 8300000, guid: 03263a35e29a9f14db4f60c7c7b72b03, type: 3}
+    - {fileID: 8300000, guid: 709eef0d67334ce4dbb9aee768d0eb45, type: 3}
+    - {fileID: 8300000, guid: 3f0785519c01c0c41a010ea48391dc92, type: 3}
