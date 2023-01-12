@@ -79,6 +79,7 @@ public class Enemy : DamageableObject
             damage = targetDamageable.startingHealth / hitsToKillPlayer;
         }
         GetComponent<Renderer>().sharedMaterial.color = skinColor;
+        originalColor = skinColor;
     }
 
     IEnumerator Attack() {
