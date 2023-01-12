@@ -76,4 +76,9 @@ public class Player : DamageableObject
         }
 
     }
+
+    protected override void Die() {
+        AudioManager.instance.PlaySound("Player Death", transform.position);
+        base.Die();
+    }
 }

@@ -35,6 +35,10 @@ public class Gun : MonoBehaviour
     int bulletsRemainingInMagazine;
     bool isReloading;
 
+    [Header("Audio")]
+    public AudioClip gunshotSound;
+    public AudioClip reloadSound;
+
     MuzzleFlash muzzleFlash;
     float nextShotTime;
     bool triggerReleasedSinceLastShot;
@@ -76,6 +80,8 @@ public class Gun : MonoBehaviour
             }
             nextShotTime = Time.time + msToShoot / 1000;
 
+            AudioManager.instance.PlaySound(gunshotSound, transform.position);
+
             muzzleFlash.Activate();
 
             transform.localPosition = transform.localPosition + Vector3.back * Random.Range(recoilDistanceMinmax.x, recoilDistanceMinmax.y);
@@ -99,6 +105,8 @@ public class Gun : MonoBehaviour
 
     IEnumerator ReloadAnimation() {
         isReloading = true;
+
+        AudioManager.instance.PlaySound(reloadSound, transform.position);
 
         yield return new WaitForSeconds(.2f);
         float percent = 0;

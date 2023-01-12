@@ -65,6 +65,7 @@ public class Enemy : DamageableObject
                 float sqrDistanceToTarget = Vector3.SqrMagnitude(transform.position - targetTransform.position);
                 if (sqrDistanceToTarget <= Mathf.Pow(attackDistance + myCollisionRadius, 2) && Time.time > nextAttackTime) {
                     nextAttackTime = Time.time + timeBetweenAttacks;
+                    AudioManager.instance.PlaySound("Enemy Attack", transform.position);
                     StartCoroutine(Attack());
                 }
             }
@@ -123,6 +124,7 @@ public class Enemy : DamageableObject
     }
 
     public override void TakeHit(float damage, Vector3 hitPoint, Vector3 hitDirection) {
+        AudioManager.instance.PlaySound("Bullet Impact", transform.position);
         if (damage >= health) {
             Destroy(
                 Instantiate(
@@ -133,6 +135,11 @@ public class Enemy : DamageableObject
             DeathEffectPrefab.main.duration + DeathEffectPrefab.main.startLifetime.constantMax);
         }
         base.TakeHit(damage, hitPoint, hitDirection);
+    }
+
+    protected override void Die() {
+        AudioManager.instance.PlaySound("Enemy Death", transform.position);
+        base.Die();
     }
 
     IEnumerator FindPath() {

@@ -39,10 +39,6 @@ public class Spawner : MonoBehaviour
 
         map = FindObjectOfType<MapGenerator>();
         NextWave();
-        if (devMode) {
-            player.startingHealth = 100000;
-            player.health = 100000;
-        }
     }
 
     void NextWave() {
@@ -58,6 +54,9 @@ public class Spawner : MonoBehaviour
             print("Starting wave: " + currentWaveNumber);
 
             if (OnNextWaveStart != null) {
+                if (currentWaveNumber > 1) {
+                    AudioManager.instance.PlaySound("New Wave", transform.position);
+                }
                 OnNextWaveStart(currentWaveNumber - 1);
             }
         }
@@ -122,6 +121,10 @@ public class Spawner : MonoBehaviour
 
         Enemy spawnedEnemy = Instantiate(enemy, tileTransform.position, Quaternion.identity) as Enemy;
         spawnedEnemy.ObjectDied += OnEnemyDeath;
+        if (devMode) {
+            currentWave.hitsToKillPlayer = 1000000;
+        }
+
         spawnedEnemy.SetCharacteristics(currentWave.skinColor, currentWave.enemySpeed, currentWave.hitsToKillPlayer, currentWave.health);
 
     }

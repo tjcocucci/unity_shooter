@@ -335,6 +335,8 @@ MonoBehaviour:
   reloadTime: 0.5
   maxReloadAngle: 50
   maxMagazineSize: 12
+  gunshotSound: {fileID: 8300000, guid: 0018276230e62574ca3647934712d25a, type: 3}
+  reloadSound: {fileID: 8300000, guid: 738bbe026877301499e87d316a3fff89, type: 3}
 --- !u!114 &8187711732296110494
 MonoBehaviour:
   m_ObjectHideFlags: 0
