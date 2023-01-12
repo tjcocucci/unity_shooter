@@ -22,7 +22,7 @@ public class Spawner : MonoBehaviour
     float nextCampingTime;
     Vector3 previousPosition;
     float campingCheckTime = 5;
-    float campingDistance = 1;
+    float campingDistance = 1.5f;
 
     MapGenerator map;
 
@@ -89,8 +89,8 @@ public class Spawner : MonoBehaviour
     }
 
     void CheckIfCamping () {
-        float distance = Vector3.Distance(previousPosition, transform.position);
-        previousPosition = transform.position;
+        float distance = Vector3.Distance(previousPosition, player.transform.position);
+        previousPosition = player.transform.position;
         if (distance < campingDistance) {
             playerCamping = true;
         } else {
