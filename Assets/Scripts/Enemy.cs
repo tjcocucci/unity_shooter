@@ -32,7 +32,7 @@ public class Enemy : DamageableObject
     void Awake()
     {
         pathfinder = GetComponent<NavMeshAgent>();
-        GetComponent<Renderer>().material.color = originalColor;
+        GetComponent<Renderer>().sharedMaterial.color = originalColor;
 
         target = GameObject.FindGameObjectWithTag("Player"); 
         if (target != null) {
@@ -77,7 +77,7 @@ public class Enemy : DamageableObject
         if (targetDamageable != null) {
             damage = targetDamageable.startingHealth / hitsToKillPlayer;
         }
-        GetComponent<Renderer>().material.color = skinColor;
+        GetComponent<Renderer>().sharedMaterial.color = skinColor;
     }
 
     IEnumerator Attack() {
