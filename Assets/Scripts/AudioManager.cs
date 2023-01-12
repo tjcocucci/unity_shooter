@@ -7,6 +7,7 @@ public class AudioManager : MonoBehaviour
     public enum AudioChannel {Master, Music, Sfx};
     public int numberOfMusicSources = 2;
     AudioSource[] musicSources;
+    AudioSource sfx2DSource;
 
     [Header("Volume")]
     public float masterVolume = 1;
@@ -34,6 +35,9 @@ public class AudioManager : MonoBehaviour
                 newMusicSource.transform.parent = transform;
 
             }
+            GameObject newsfx2DSource = new GameObject("2D sfx");
+            sfx2DSource = newsfx2DSource.AddComponent<AudioSource>();
+            newsfx2DSource.transform.parent = transform;
 
             library = FindObjectOfType<AudioLibrary>();
             playerTransform = FindObjectOfType<Player> ().transform;
@@ -70,14 +74,19 @@ public class AudioManager : MonoBehaviour
         PlaySound(clip, position);
     }
 
+    public void PlaySound2D (string audioName) {
+        sfx2DSource.PlayOneShot(library.GetClipFromName(audioName), sfxVolume * masterVolume);
+    }
+
     IEnumerator AnimateMusicCrossfade (float fadeDuration) {
         float  percent = 0;
-        int nextMusicSourceIndex = (activeMusicSourceIndex + 1) % numberOfMusicSources;
+        int perviousMusicSourceIndex = (activeMusicSourceIndex - 1 + numberOfMusicSources) % numberOfMusicSources;
+        print("perviousMusicSourceIndex" + perviousMusicSourceIndex);
 
         while (percent <= 1) {
             percent += Time.deltaTime * (1 / fadeDuration);
-            musicSources[activeMusicSourceIndex].volume = Mathf.Lerp(masterVolume * musicVolume, 0, percent);
-            musicSources[nextMusicSourceIndex].volume = Mathf.Lerp(0, masterVolume * musicVolume, percent);
+            musicSources[perviousMusicSourceIndex].volume = Mathf.Lerp(masterVolume * musicVolume, 0, percent);
+            musicSources[activeMusicSourceIndex].volume = Mathf.Lerp(0, masterVolume * musicVolume, percent);
             yield return null;
         }
     }

@@ -55,7 +55,7 @@ public class Spawner : MonoBehaviour
 
             if (OnNextWaveStart != null) {
                 if (currentWaveNumber > 1) {
-                    AudioManager.instance.PlaySound("New Wave", transform.position);
+                    AudioManager.instance.PlaySound2D("New Wave");
                 }
                 OnNextWaveStart(currentWaveNumber - 1);
             }
