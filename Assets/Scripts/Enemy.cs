@@ -78,7 +78,7 @@ public class Enemy : DamageableObject
         startingHealth = health;
         pathfinder.speed = enemySpeed;
         if (targetDamageable != null) {
-            damage = targetDamageable.startingHealth / hitsToKillPlayer;
+            damage = targetDamageable.startingHealth / (hitsToKillPlayer - 0.5f);
         }
         GetComponent<Renderer>().sharedMaterial.color = skinColor;
         originalColor = skinColor;
