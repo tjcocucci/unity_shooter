@@ -29,6 +29,8 @@ public class Enemy : DamageableObject
     float targetCollisionRadius;
     bool hasTarget;
 
+    public static event System.Action EnemyDeath;
+
     void Awake()
     {
         pathfinder = GetComponent<NavMeshAgent>();
@@ -140,6 +142,9 @@ public class Enemy : DamageableObject
 
     protected override void Die() {
         AudioManager.instance.PlaySound("Enemy Death", transform.position);
+        if (EnemyDeath != null) {
+            EnemyDeath();
+        }
         base.Die();
     }
 
