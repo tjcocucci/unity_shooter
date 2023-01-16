@@ -14,9 +14,10 @@ public class HealthBar : MonoBehaviour
     }
 
     void Update() {
+        healthPercent = 0;
         if (player != null) {
             healthPercent = player.health / player.startingHealth;
-            healthBarRect.localScale = new Vector3 (healthPercent, 1, 1);
         }
+        healthBarRect.localScale = new Vector3 (healthPercent, 1, 1);
     }
 }
