@@ -70,7 +70,6 @@ public class UIScreen : MonoBehaviour
     }
 
     public void StartNewGame() {
-        print("hola");
         SceneManager.LoadScene("Game");
     }
 

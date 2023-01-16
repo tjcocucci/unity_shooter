@@ -8,11 +8,14 @@ public class MusicManager : MonoBehaviour
     public AudioClip mainTheme;
     public AudioClip menuTheme;
     string sceneName;
-
     MusicManager instance;
 
-    void Awake () {
+    void OnEnable () {
         SceneManager.sceneLoaded += StartLevelMusic;
+    }
+
+    void OnDisable () {
+        SceneManager.sceneLoaded -= StartLevelMusic;
     }
 
     void PlayMusic() {

@@ -90,7 +90,6 @@ public class AudioManager : MonoBehaviour
     IEnumerator AnimateMusicCrossfade (float fadeDuration) {
         float  percent = 0;
         int perviousMusicSourceIndex = (activeMusicSourceIndex - 1 + numberOfMusicSources) % numberOfMusicSources;
-        print("perviousMusicSourceIndex" + perviousMusicSourceIndex);
 
         while (percent <= 1) {
             percent += Time.deltaTime * (1 / fadeDuration);

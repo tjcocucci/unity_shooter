@@ -51,7 +51,6 @@ public class Spawner : MonoBehaviour
             nextCampingTime = Time.time + campingCheckTime;
 
             currentWave = waves[currentWaveNumber - 1];
-            print("Starting wave: " + currentWaveNumber);
 
             if (OnNextWaveStart != null) {
                 if (currentWaveNumber > 1) {
