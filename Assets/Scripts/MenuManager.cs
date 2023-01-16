@@ -18,6 +18,9 @@ public class MenuManager : MonoBehaviour
     int activeResolutionIndex;
 
     public void Start () {
+        OptionsMenu.SetActive(false);
+        MainMenu.SetActive(true);
+
         volumeSliders[0].value = AudioManager.instance.masterVolume;
         volumeSliders[1].value = AudioManager.instance.musicVolume;
         volumeSliders[2].value = AudioManager.instance.sfxVolume;
