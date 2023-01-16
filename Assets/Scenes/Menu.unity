@@ -3547,6 +3547,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8547889894163850472, guid: 1fc5727abf47e024398094afff7f824d, type: 3}
+      propertyPath: mainTheme
+      value: 
+      objectReference: {fileID: 8300000, guid: a03a24eee7abe7440943431d92734430, type: 3}
     - target: {fileID: 8547889894163850474, guid: 1fc5727abf47e024398094afff7f824d, type: 3}
       propertyPath: m_RootOrder
       value: 3

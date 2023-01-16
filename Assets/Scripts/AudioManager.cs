@@ -26,7 +26,7 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
         } else {
             instance = this;
-                DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
 
             musicSources = new AudioSource[numberOfMusicSources];
             for (int i = 0; i < numberOfMusicSources; i++) {
