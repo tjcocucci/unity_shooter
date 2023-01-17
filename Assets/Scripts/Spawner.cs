@@ -53,9 +53,7 @@ public class Spawner : MonoBehaviour
             currentWave = waves[currentWaveNumber - 1];
 
             if (OnNextWaveStart != null) {
-                if (currentWaveNumber > 1) {
-                    AudioManager.instance.PlaySound2D("New Wave");
-                }
+
                 OnNextWaveStart(currentWaveNumber - 1);
             }
         }
@@ -81,7 +79,7 @@ public class Spawner : MonoBehaviour
                 foreach (Enemy enemy in FindObjectsOfType<Enemy>()) {
                     GameObject.Destroy(enemy.gameObject);
                 }
-                NextWave();
+                Invoke("NextWave", 3);
             }
         }
     }
@@ -131,7 +129,10 @@ public class Spawner : MonoBehaviour
     void OnEnemyDeath() {
         killedEnemies++;
         if (killedEnemies == currentWave.totalEnemies && currentWaveNumber < waves.Length) {
-            NextWave();
+            if (currentWaveNumber > 0) {
+                AudioManager.instance.PlaySound2D("New Wave");
+            }
+            Invoke("NextWave", 3);
         }
     }
 
