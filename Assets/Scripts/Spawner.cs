@@ -132,7 +132,8 @@ public class Spawner : MonoBehaviour
             if (currentWaveNumber > 0) {
                 AudioManager.instance.PlaySound2D("New Wave");
             }
-            Invoke("NextWave", 3);
+            Invoke("NextWave", 1);
+            Destroy(FindObjectOfType<ParticleSystem>().gameObject, 1);
         }
     }
 

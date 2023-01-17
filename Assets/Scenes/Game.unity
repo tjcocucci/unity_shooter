@@ -14466,7 +14466,7 @@ MonoBehaviour:
   devMode: 0
   enemy: {fileID: 7569190113791369472, guid: 395f6a64598eaac4896cac8278f64e12, type: 3}
   waves:
-  - totalEnemies: 0
+  - totalEnemies: 5
     timeBetweenSpawns: 2.5
     skinColor: {r: 0.027451001, g: 0.34124115, b: 0.78431374, a: 0}
     enemySpeed: 2
